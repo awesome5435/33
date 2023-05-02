@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中考志愿模拟预估系统</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+  <style>
+    footer {
+      text-align: center;
+      font-size: 15px;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    button {
+      padding: 5px 10px;
+      width: 100px;
+      height: 35px;
+
+    }
+
+    span {
+      color: red;
+    }
+
+    p{
+      font-size: 20px;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1 class="text-center mb-4">填写一模成绩进行志愿模拟</h1>
+  <table style="font-size: 10px;">
+    <tbody>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="chinese">语文</label>
+          <input type="number" class="form-control" id="chinese" min="0" max="150">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="math">数学</label>
+          <input type="number" class="form-control" id="math" min="0" max="150">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="english">英语</label>
+          <input type="number" class="form-control" id="english" min="0" max="150">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="physics">物理</label>
+          <input type="number" class="form-control" id="physics" min="0" max="150">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="chemistry">化学</label>
+          <input type="number" class="form-control" id="chemistry" min="0" max="150">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="history">历史</label>
+          <input type="number" class="form-control" id="history" min="0" max="150">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="dow">道法</label>
+          <input type="number" class="form-control" id="dow" min="0" max="150">
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="calculate()">计算总分</button>
+      <h2 class="text-center"> <span id="total"></span></h2>
+    </form>
+    <p>根据您填写的一模成绩，同水平发挥下，预估中考成绩为<span id="Scorerange1"></span>至<span id="Scorerange2"></span>,为您推荐的中考志愿填报方案为：</p>
+      <div class="text-center mt-3">
+        <table class="table table-hover table-bordered">
+          <thead>
+          <tr>
+            <th>志愿填报</th>
+            <th>学校名称</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>提前批-统招</td>
+            <td><input type="text" name="result" readonly></td>
+          </tr>
+          <tr>
+            <td>统招A</td>
+            <td><input type="text" name="recruitA" readonly></td>
+          </tr>
+          <tr>
+            <td>统招B</td>
+            <td><input type="text" name="recruitB" readonly></td>
+          </tr>
+          <tr>
+            <td>统招C</td>
+            <td><input type="text" name="recruitC" readonly></td>
+          </tr>
+          <tr>
+            <td>统招D</td>
+            <td><input type="text" name="recruitD" readonly></td>
+          </tr>
+          <tr>
+            <td>统招E</td>
+            <td><input type="text" name="recruitE" readonly></td>
+          </tr>
+          <tr>
+            <td>统招F</td>
+            <td><input type="text" name="recruitF" readonly></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer style="text-align: center; margin-top: 20px;">
+      <p>此志愿填报方案不包含签约情形，仅供参考。</p>
+    </footer>
+  </table>
+  </form>
+</div>
+<script>
+  function calculate() {
+    const chineseScore = Number(document.getElementById('chinese').value);
+    const mathScore = Number(document.getElementById('math').value);
+    const englishScore = Number(document.getElementById('english').value);
+    const physicsScore = Number(document.getElementById('physics').value);
+    const chemistryScore = Number(document.getElementById('chemistry').value);
+    const historyScore = Number(document.getElementById('history').value);
+    const dowScore = Number(document.getElementById('dow').value);
+    const total = chineseScore + mathScore + englishScore + physicsScore + chemistryScore + historyScore + dowScore;
+    var recruitA = parseFloat(document.getElementsByName('recruitA')[0].value);
+    var recruitB = parseFloat(document.getElementsByName('recruitB')[0].value);
+    var recruitC = parseFloat(document.getElementsByName('recruitC')[0].value);
+    var recruitD = parseFloat(document.getElementsByName('recruitD')[0].value);
+    var recruitE = parseFloat(document.getElementsByName('recruitE')[0].value);
+    var recruitF = parseFloat(document.getElementsByName('recruitF')[0].value);
+    var totalScore = document.getElementById("total");
+    var Scorerange1 = total + 95;
+    var Scorerange2 = total + 105;
+    var Scorerange1Span = document.getElementById("Scorerange1");
+    Scorerange1Span.innerHTML = Scorerange1.toFixed(1);
+    var Scorerange2Span = document.getElementById("Scorerange2");
+    Scorerange2Span.innerHTML = Scorerange2.toFixed(1);
+    totalScore.innerHTML = total;
+    document.getElementById('total').value = total;
+    if (total >= 586 && total <= 640) {
+      result = "苏州中学";
+      recruitA = "星海实验（苏茜路校区）";
+      recruitB = '实验中学（本部）';
+      recruitC = '苏州中学园区校';
+      recruitD = '星海实验（沈浒路校区）';
+      recruitE = '西交苏州附中（方洲路校区）';
+      recruitF = '西交苏州附中（普惠路校区）';
+      document.getElementsByName('result')[0].value = result;
+      document.getElementsByName('recruitA')[0].value = recruitA;
+      document.getElementsByName('recruitB')[0].value = recruitB;
+      document.getElementsByName('recruitC')[0].value = recruitC;
+      document.getElementsByName('recruitD')[0].value = recruitD;
+      document.getElementsByName('recruitE')[0].value = recruitE;
+      document.getElementsByName('recruitF')[0].value = recruitF;
+    }  else {
+      result = "苏州中学（不填白不填）";
+      recruitA = "最想去的高中";
+      recruitB = '最想去的高中';
+      recruitC = '基本能去的高中';
+      recruitD = '基本能去的高中';
+      recruitE = '保底的高中';
+      recruitF = '保底的高中';
+      document.getElementsByName('result')[0].value = result;
+      document.getElementsByName('recruitA')[0].value = recruitA;
+      document.getElementsByName('recruitB')[0].value = recruitB;
+      document.getElementsByName('recruitC')[0].value = recruitC;
+      document.getElementsByName('recruitD')[0].value = recruitD;
+      document.getElementsByName('recruitE')[0].value = recruitE;
+      document.getElementsByName('recruitF')[0].value = recruitF;
+    }
+    sessionStorage.setItem("total", total);
+    sessionStorage.setItem("result", result);
+    sessionStorage.setItem("recruitA", recruitA);
+    sessionStorage.setItem("recruitB", recruitB);
+    sessionStorage.setItem("recruitC", recruitC);
+    sessionStorage.setItem("recruitD", recruitD);
+    sessionStorage.setItem("recruitE", recruitE);
+    sessionStorage.setItem("recruitF", recruitF);
+
+  }
+</script>
+</body>
+</html>
